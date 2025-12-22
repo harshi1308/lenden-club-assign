@@ -1,195 +1,34 @@
-# Money Transfer System - Assignment 2
+# Money Transfer System 
 
 A peer-to-peer money transfer system with real-time transaction tracking and audit logging.
 
-## 🎯 Features
+Features
 
-- ✅ User Authentication (JWT-based)
-- ✅ Real-time Money Transfers
-- ✅ ACID-compliant Database Transactions
-- ✅ Immutable Audit Log System
-- ✅ Transaction History with Sorting
-- ✅ Real-time Balance Updates
+- User Authentication (JWT-based)
+- Real-time Money Transfers
+- ACID-compliant Database Transactions
+- Immutable Audit Log System
+- Transaction History with Sorting
+- Real-time Balance Updates
 
-## 🛠️ Technology Stack
+Technology Stack
 
-**Backend:**
+Backend:
 - Python 3.x
 - Flask (Web Framework)
 - Flask-SQLAlchemy (ORM)
 - Flask-JWT-Extended (Authentication)
 - SQLite (Database)
 
-**Frontend:**
+Frontend:
 - HTML5
 - CSS3
 - Vanilla JavaScript
 
-## 📦 Setup Instructions
 
-### Prerequisites
-- Python 3.8 or higher
-- pip (Python package manager)
+Database Schema
 
-### Step 1: Clone/Navigate to the Project
-
-```bash
-cd d:\lenden-club-assign
-```
-
-### Step 2: Set Up Backend
-
-1. Navigate to the backend folder:
-```bash
-cd backend
-```
-
-2. Create a virtual environment:
-```bash
-python -m venv venv
-```
-
-3. Activate the virtual environment:
-```bash
-# Windows
-venv\Scripts\activate
-```
-
-4. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-5. Run the backend server:
-```bash
-python app.py
-```
-
-The backend will start on `http://localhost:5000`
-
-### Step 3: Set Up Frontend
-
-1. Open a new terminal and navigate to the frontend folder:
-```bash
-cd d:\lenden-club-assign\frontend
-```
-
-2. Open `index.html` in your web browser, or use a simple HTTP server:
-```bash
-# Python 3
-python -m http.server 8000
-```
-
-3. Access the application at `http://localhost:8000`
-
-## 📚 API Documentation
-
-### Authentication Endpoints
-
-#### Register User
-- **POST** `/register`
-- **Body:**
-```json
-{
-  "username": "john_doe",
-  "email": "john@example.com",
-  "password": "securepassword"
-}
-```
-- **Response (201):**
-```json
-{
-  "message": "User registered successfully",
-  "user_id": 1
-}
-```
-
-#### Login
-- **POST** `/login`
-- **Body:**
-```json
-{
-  "username": "john_doe",
-  "password": "securepassword"
-}
-```
-- **Response (200):**
-```json
-{
-  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
-  "user_id": 1,
-  "username": "john_doe",
-  "balance": 1000.0
-}
-```
-
-### Transaction Endpoints
-
-#### Get Balance
-- **GET** `/balance`
-- **Headers:** `Authorization: Bearer <token>`
-- **Response (200):**
-```json
-{
-  "balance": 1000.0
-}
-```
-
-#### Transfer Money
-- **POST** `/transfer`
-- **Headers:** `Authorization: Bearer <token>`
-- **Body:**
-```json
-{
-  "receiver_username": "jane_doe",
-  "amount": 100.50
-}
-```
-- **Response (200):**
-```json
-{
-  "message": "Transfer successful",
-  "new_balance": 899.50,
-  "transaction_id": 1
-}
-```
-
-#### Get Transaction History
-- **GET** `/transactions/<user_id>`
-- **Headers:** `Authorization: Bearer <token>`
-- **Response (200):**
-```json
-{
-  "transactions": [
-    {
-      "id": 1,
-      "type": "SENT",
-      "other_party": "jane_doe",
-      "amount": 100.50,
-      "status": "SUCCESS",
-      "timestamp": "2025-12-22T10:30:00",
-      "description": "Transfer completed"
-    }
-  ]
-}
-```
-
-#### Get All Users
-- **GET** `/users`
-- **Headers:** `Authorization: Bearer <token>`
-- **Response (200):**
-```json
-{
-  "users": [
-    {"id": 2, "username": "jane_doe"},
-    {"id": 3, "username": "bob_smith"}
-  ]
-}
-```
-
-## 🗄️ Database Schema
-
-### Users Table
+ Users Table
 | Column | Type | Constraints |
 |--------|------|-------------|
 | id | Integer | Primary Key |
@@ -199,7 +38,7 @@ python -m http.server 8000
 | balance | Float | Default: 1000.0 |
 | created_at | DateTime | Default: UTC Now |
 
-### AuditLog Table
+AuditLog Table
 | Column | Type | Constraints |
 |--------|------|-------------|
 | id | Integer | Primary Key |
@@ -210,13 +49,13 @@ python -m http.server 8000
 | timestamp | DateTime | Default: UTC Now |
 | description | String(200) | Optional |
 
-## 🔒 ACID Compliance
+ACID Compliance
 
 The transfer endpoint implements ACID properties:
-- **Atomicity:** Both debit and credit operations happen together or not at all
-- **Consistency:** Balance constraints are maintained (no negative balances)
-- **Isolation:** SQLite transactions prevent race conditions
-- **Durability:** Committed transactions are permanently stored
+- Atomicity: Both debit and credit operations happen together or not at all
+- Consistency: Balance constraints are maintained (no negative balances)
+- Isolation: SQLite transactions prevent race conditions
+- Durability: Committed transactions are permanently stored
 
 Implementation:
 ```python
